@@ -6,6 +6,61 @@ const {
    createJWT,
 } = require("../utils/auth");
 
+exports.deleteQuiz = (req, res) => {
+  let { userId, quizId } = req.body;
+  Quizes.findOne({userId: userId}).then(quizes => {
+    if(quizes){
+      quizes.quizes.splice(quizId, 1);
+      Quizes.findOneAndUpdate({userId: userId}, {
+        quizes: quizes.quizes
+      }).then(q => {
+        if(q){
+          res.status(200).json({
+            userId: q.userId,
+            quizes: q.quizes
+          });
+        }else{
+          return res.status(404).json({errors: [{ quizes: "not Updated" }],});
+        }
+      }).catch(err => {
+        res.status(500).json({ erros: err });
+      });
+    }else{
+      return res.status(404).json({errors: [{ quizes: "not found" }],});
+    }
+  }).catch(err => {
+    res.status(500).json({ erros: err });
+  });
+};
+
+exports.editQuiz = (req, res) => {
+  let { userId, title, quizElements, quizId} = req.body;
+  Quizes.findOne({userId: userId}).then(quizes => {
+    if(quizes){
+      quizes.quizes[quizId].title = title;
+      quizes.quizes[quizId].quizElements = quizElements;
+      Quizes.findOneAndUpdate({userId: userId}, {
+        quizes: quizes.quizes
+      }).then(q => {
+        if(q){
+          res.status(200).json({
+            userId: q.userId,
+            quizes: q.quizes
+          });
+        }else{
+          return res.status(404).json({errors: [{ quizes: "not Updated" }],});
+        }
+      }).catch(err => {
+        res.status(500).json({ erros: err });
+      });
+    }else{
+      return res.status(404).json({errors: [{ quizes: "not found" }],});
+    }
+  }).catch(err => {
+    res.status(500).json({ erros: err });
+  });
+}
+
 exports.addQuiz = (req, res) => {
   let { userId, title, quizElements } = req.body;
   Quizes.findOne({userId: userId}).then(quizes => {
