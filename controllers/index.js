@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const Quizes = require('../models/Quizes');
+const Responses = require('../models/Responses');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const {
@@ -11,6 +12,9 @@ exports.deleteQuiz = (req, res) => {
   Quizes.findOne({userId: userId}).then(quizes => {
     if(quizes){
       quizes.quizes.splice(quizId, 1);
+      Responses.deleteMany({userId: userId, quizId: quizId}).then(res => {
+        console.log('Data Deleted');
+      })
       Quizes.findOneAndUpdate({userId: userId}, {
         quizes: quizes.quizes
       }).then(q => {
@@ -43,6 +47,9 @@ exports.editQuiz = (req, res) => {
         quizes: quizes.quizes
       }).then(q => {
         if(q){
+          Responses.deleteMany({userId: userId, quizId: quizId}).then(res => {
+            console.log('Data Deleted');
+          })
           res.status(200).json({
             userId: q.userId,
             quizes: q.quizes
@@ -59,6 +66,15 @@ exports.editQuiz = (req, res) => {
   }).catch(err => {
     res.status(500).json({ erros: err });
   });
+}
+
+exports.getResponses = (req, res) => {
+  let { userId, quizId } = req.body;
+  Responses.find({userId: userId, quizId: quizId}).then(responses => {
+    res.status(200).json({
+      responses: responses
+    });
+  })
 }
 
 exports.addQuiz = (req, res) => {
@@ -86,7 +102,18 @@ exports.addQuiz = (req, res) => {
     res.status(500).json({ erros: err });
   });
 }
-
+exports.submitResponse = (req, res) => {
+  let { userId, quizId, response } = req.body;
+  let resp = new Responses({
+    userId: userId,
+    quizId: quizId,
+    response: response
+  });
+  resp.save();
+  res.status(200).json({
+    success: true
+  })
+}
 exports.getQuizes = (req, res) => {
   let { userId } = req.body;
   Quizes.findOne({userId: userId}).then(quizes => {
