@@ -2,13 +2,13 @@
 
 This project's purpose is to provide a backend to QuizTaker Frontend
 online quizzes with an easy. This is the back-end part of quizTaker, to install the front-end
-Go to: https://github.com/lakshayman/quizTaker
+Go to: https://github.com/lakshayman/MyQuizTaker
 
 ## Installing quizTaker on your PC
 
 ### Steps to install quizTaker front-end:
 1) Create a parent folder called 'QUIZTAKER' in preferred location( If front-end downloaded then select same parent folder ).
-2) Fork the quizTakerBackend from the repository: https://github.com/lakshayman/quizTakerBackend
+2) Fork the quizTakerBackend from the repository: https://github.com/lakshayman/MyQuizTakerBackend
 3) Copy the HTTPS link of code from the repository.
 4) Open VS Code and open QUIZTAKER folder in VS Code.
 5) Go to View -> Command Palette.
@@ -19,7 +19,7 @@ Go to: https://github.com/lakshayman/quizTaker
 10) Enter Command "npm install" to install deoendencies.
 11) Wait for task to complete.
 12) Enter Command "npm start" to run the app.
-13) To install front-end, visit the given link: https://github.com/lakshayman/quizTaker#readme
+13) To install front-end, visit the given link: https://github.com/lakshayman/MyQuizTaker#readme
 
 ## Available Scripts
 
